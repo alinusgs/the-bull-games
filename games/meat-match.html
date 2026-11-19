@@ -2,27 +2,27 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    
+    <!-- PROTECTED: meta type -->
     <meta name="type" value="app" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мясной Матч — The Бык</title>
     <meta property="og:title" content="Мясной Матч — The Бык">
     <meta property="og:description" content="Match-3 с эволюцией продуктов: собери Золотого Быка за 3 минуты.">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
     <meta property="og:type" content="website">
     <style>
         *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-        body{margin:0;overflow:hidden;background:#111;color:#f3ece4;font-family:Arial,sans-serif;height:100vh;height:100dvh;display:flex;align-items:center;justify-content:center;
+        body{margin:0;overflow:hidden;background:#111;color:#f3ece4;font-family:Manrope,sans-serif;height:100vh;height:100dvh;display:flex;align-items:center;justify-content:center;
             background-image:repeating-linear-gradient(90deg,#141210 0 18px,#0d0c0b 18px 22px);}
         #app{width:min(94vw,500px);display:flex;flex-direction:column;gap:14px}
         header{display:flex;justify-content:space-between;align-items:flex-end}
-        h1{font-family:Arial;font-weight:800;font-size:20px;margin:0;color:#f3ece4;letter-spacing:-.5px}
+        h1{font-family:Unbounded;font-weight:800;font-size:20px;margin:0;color:#f3ece4;letter-spacing:-.5px}
         h1 span{color:#d6261f}
         .sub{font-size:11px;color:#8a7f74;text-transform:uppercase;letter-spacing:2px}
         .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
         .stat{background:#1a1715;border:1px solid #2a2420;border-radius:10px;padding:10px 12px}
         .stat small{display:block;font-size:10px;color:#8a7f74;text-transform:uppercase;letter-spacing:1.5px}
-        .stat b{font-family:Arial;font-size:20px;color:#f3ece4}
+        .stat b{font-family:Unbounded;font-size:20px;color:#f3ece4}
         .stat i{color:#d6a630;margin-right:6px;font-size:14px}
         .stat.warn b{color:#d6261f}
         #bar{height:4px;background:#2a2420;border-radius:4px;overflow:hidden}
@@ -43,38 +43,40 @@
         .l2 .in{box-shadow:inset 0 0 0 3px #ffd75e,0 0 10px #d6a63088}
         .lvl{position:absolute;top:2px;right:5px;font-size:9px;font-weight:800;color:#ffd75e}
         #flash{position:fixed;inset:0;background:#ffd75e;opacity:0;pointer-events:none;transition:opacity .4s}
-        #toast{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);font-family:Arial;font-weight:800;font-size:24px;color:#ffd75e;opacity:0;pointer-events:none;transition:.3s;text-align:center;text-shadow:0 2px 0 #000;z-index:5}
+        #toast{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);font-family:Unbounded;font-weight:800;font-size:24px;color:#ffd75e;opacity:0;pointer-events:none;transition:.3s;text-align:center;text-shadow:0 2px 0 #000;z-index:5}
         #toast.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
         .legend{display:flex;justify-content:space-between;font-size:11px;color:#8a7f74}
         .legend i{margin:0 2px}
         .overlay{position:fixed;inset:0;background:#0d0c0bf2;display:flex;align-items:center;justify-content:center;z-index:10;padding:20px}
         .overlay.hide{display:none}
         .card{width:min(92vw,420px);text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
-        .card h2{font-family:Arial;font-size:28px;margin:0;color:#f3ece4}
+        .card h2{font-family:Unbounded;font-size:28px;margin:0;color:#f3ece4}
         .card p{margin:0;color:#b5aa9e;line-height:1.55;font-size:14px}
-        .rank{font-family:Arial;color:#ffd75e;font-size:22px}
-        .big{font-family:Arial;font-size:44px;color:#d6261f;font-weight:800}
+        .rank{font-family:Unbounded;color:#ffd75e;font-size:22px}
+        .big{font-family:Unbounded;font-size:44px;color:#d6261f;font-weight:800}
         .btn{border:0;border-radius:10px;padding:14px 22px;font-family:Manrope;font-weight:800;font-size:15px;cursor:pointer;background:#d6261f;color:#fff;transition:.2s;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
         .btn:hover{background:#b81d17}
         .btn.ghost{background:#1a1715;color:#f3ece4;border:1px solid #2a2420}
         .btn.ghost:hover{background:#25201c}
         .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
         #qr{width:150px;height:150px;border-radius:10px;background:#fff;padding:8px}
-        .code{font-family:Arial;letter-spacing:2px;color:#f3ece4;background:#1a1715;padding:8px 14px;border-radius:8px;border:1px dashed #d6a630}
+        .code{font-family:Unbounded;letter-spacing:2px;color:#f3ece4;background:#1a1715;padding:8px 14px;border-radius:8px;border:1px dashed #d6a630}
         .lb{width:100%;max-width:340px;margin:16px auto;border-collapse:collapse;font-size:14px;text-align:left}
         .lb caption{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#e0482f;font-weight:700;padding-bottom:8px;text-align:center}
         .lb td{padding:7px 10px;border-bottom:1px solid #2a2420;color:#d9cfc6}
         .lb td:first-child{width:34px;color:#8a7f74;text-align:center}
         .lb td:last-child{text-align:right;font-weight:700}
         .lb tr.me td{color:#ffd75e;background:rgba(255,215,94,.08)}
-        .overlay{overflow-y:auto;align-items:safe center}.mascot-hero{width:min(250px,70vw);max-height:260px;object-fit:contain;border-radius:18px;margin-bottom:10px;filter:drop-shadow(0 14px 25px rgba(0,0,0,.35))}.mascot-mini{width:42px;height:42px;object-fit:cover;border-radius:10px;vertical-align:middle;margin-right:8px}
+        .overlay{overflow-y:auto;align-items:safe center}
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 </head>
 <body>
 <div id="app">
-  <header><div><div class="sub">🐂 The Бык представляет</div><h1>Мясной <span>Матч</span></h1></div>
-  <button class="btn ghost" id="mute" style="padding:10px 12px">🔊</button></header>
+  <header><div><div class="sub">The Бык представляет</div><h1>Мясной <span>Матч</span></h1></div>
+  <button class="btn ghost" id="mute" style="padding:10px 12px"><i class="fa-solid fa-volume-high" style="color:#f3ece4"></i></button></header>
   <div class="stats">
     <div class="stat"><small>Очки</small><b id="score">0</b></div>
     <div class="stat"><small>Время</small><b id="time">3:00</b></div>
@@ -83,21 +85,19 @@
   <div id="bar"><div></div></div>
   <div id="board"><div id="toast"></div></div>
   <div class="legend">
-    <span>🌿🌱🌳 ряд</span>
-    <span>🍖🍔🥓 всё поле</span>
-    <span>🍞🌭🍕 столбец</span>
+    <span><i class="fa-solid fa-leaf" style="color:#4fa04a"></i><i class="fa-solid fa-seedling" style="color:#4fa04a"></i><i class="fa-solid fa-tree" style="color:#4fa04a"></i> ряд</span>
+    <span><i class="fa-solid fa-drumstick-bite" style="color:#e0413a"></i><i class="fa-solid fa-burger" style="color:#e0413a"></i><i class="fa-solid fa-bacon" style="color:#e0413a"></i> всё поле</span>
+    <span><i class="fa-solid fa-bread-slice" style="color:#f0a040"></i><i class="fa-solid fa-hotdog" style="color:#f0a040"></i><i class="fa-solid fa-pizza-slice" style="color:#f0a040"></i> столбец</span>
   </div>
 </div>
 <div id="flash"></div>
 <div class="overlay" id="start"><div class="card">
-  <canvas id="startMascot" style="width:180px;height:230px"></canvas>
-  <div style="font-size:46px">🔥</div>
+  <i class="fa-solid fa-fire-flame-curved" style="font-size:46px;color:#d6261f"></i>
   <h2>Мясной Матч</h2>
-  <p>Свайпай соседние тайлы. 3 одинаковых — эволюция в продукт уровнем выше. 3 тайла 3-го уровня — мега-бонус. Окорок ×3 = <b style="color:#ffd75e">маскот The Бык</b>.<br>Каждые 30 сек падает уголёк — убирай его матчем рядом. Больше 10 — конец.</p>
-  <button class="btn" id="go">▶ Начать — 3 минуты</button>
+  <p>Свайпай соседние тайлы. 3 одинаковых — эволюция в продукт уровнем выше. 3 тайла 3-го уровня — мега-бонус. Окорок ×3 = <b style="color:#ffd75e">Золотой Бык</b>.<br>Каждые 30 сек падает уголёк — убирай его матчем рядом. Больше 10 — конец.</p>
+  <button class="btn" id="go"><i class="fa-solid fa-play" style="color:#fff"></i>Начать — 3 минуты</button>
 </div></div>
 <div class="overlay hide" id="end"><div class="card">
-  <canvas id="endMascot" style="width:150px;height:190px"></canvas>
   <div class="sub" id="reason">Время вышло</div>
   <div class="big" id="fscore">0</div>
   <div class="rank" id="rank"></div>
@@ -106,15 +106,15 @@
   <div class="code" id="promo"></div>
   <p>Покажи QR на кассе The Бык и получи бонус</p>
   <div class="row">
-    <a class="btn ghost" id="tg" target="_blank">✈ Telegram</a>
-    <a class="btn ghost" id="wa" target="_blank">◉ WhatsApp</a>
+    <a class="btn ghost" id="tg" target="_blank"><i class="fa-brands fa-telegram" style="color:#2aa3df"></i>Telegram</a>
+    <a class="btn ghost" id="wa" target="_blank"><i class="fa-brands fa-whatsapp" style="color:#3fc35a"></i>WhatsApp</a>
   </div>
-  <button class="btn" id="again">↻ Ещё раз</button>
+  <button class="btn" id="again"><i class="fa-solid fa-rotate-right" style="color:#fff"></i>Ещё раз</button>
 </div></div>
 <script>
 function renderLB(score){const d=[['Гость 4',10230],['Гость 8',7890],['Гость 2',5600],['Гость 11',3720],['Гость 6',1980],['Гость 1',890]];const r=d.map(x=>({n:x[0],s:x[1]})).concat({n:'Ты',s:score,me:1}).sort((a,b)=>b.s-a.s);const m=['🥇','🥈','🥉'];document.getElementById('lb').innerHTML='<caption>Рейтинг дня</caption>'+r.map((x,i)=>'<tr'+(x.me?' class="me"':'')+'><td>'+(m[i]||i+1)+'</td><td>'+x.n+'</td><td>'+x.s+'</td></tr>').join('');}
 const N=7, board=document.getElementById('board');
-const ICONS={};
+const ICONS={g:['fa-leaf','fa-seedling','fa-tree'],m:['fa-drumstick-bite','fa-burger','fa-bacon'],b:['fa-bread-slice','fa-hotdog','fa-pizza-slice'],x:['fa-bone'],c:['fa-fire']};
 const NAMES={g:['Капуста','Салат','Брокколи'],m:['Стейк','Котлета','Окорок'],b:['Хлеб','Сэндвич','Пицца']};
 const MULT=[1,2,5];
 let grid,els={},uid=0,score=0,timeLeft=180,busy=false,over=true,timer,coalTimer,muted=false,actx;
@@ -134,7 +134,7 @@ function initGrid(){
 function render(spawnFrom){
   const s=S(),alive=new Set();
   for(let r=0;r<N;r++)for(let c=0;c<N;c++){const t=grid[r][c];if(!t)continue;alive.add(t.id);let el=els[t.id];
-    if(!el){el=document.createElement('div');el.className=`tile k-${t.kind} l${t.level}`;el.innerHTML=`<div class="in">${({g:'🌿',m:'🍖',b:'🍞',x:'⭐',c:'🔥'})[t.kind]}${t.level?`<span class="lvl">${'★'.repeat(t.level)}</span>`:''}</div>`;
+    if(!el){el=document.createElement('div');el.className=`tile k-${t.kind} l${t.level}`;el.innerHTML=`<div class="in"><i class="fa-solid ${ICONS[t.kind][t.level]}"></i>${t.level?`<span class="lvl">${'★'.repeat(t.level)}</span>`:''}</div>`;
       const sr=spawnFrom&&spawnFrom[t.id]!==undefined?spawnFrom[t.id]:r;el.style.transition='none';el.style.transform=`translate(${c*s}px,${sr*s}px)`;board.appendChild(el);els[t.id]=el;el.offsetWidth;el.style.transition='';if(t.born){el.classList.add('born');t.born=false}}
     el.style.transform=`translate(${c*s}px,${r*s}px)`}
   for(const id in els)if(!alive.has(+id)){els[id].remove();delete els[id]}
@@ -163,7 +163,7 @@ async function resolve(swap){
       else{
         if(run.kind==='g'){for(let c=0;c<N;c++)rem.add(K(pos[0],c));gain+=500;toast('Витаминный взрыв!');flash(.4);tone(660,.4,'sawtooth')}
         if(run.kind==='b'){for(let r=0;r<N;r++)rem.add(K(r,pos[1]));gain+=500;toast('Сырный фонтан!');flash(.4);tone(520,.4,'sawtooth')}
-        if(run.kind==='m'){bull=true;for(let i=0;i<N*N;i++)rem.add(i);gain+=3000;toast('МАСКОТ THE БЫК!');flash(1);navigator.vibrate&&navigator.vibrate([200,80,300]);[300,400,500,700].forEach((f,i)=>setTimeout(()=>tone(f,.3,'square',.12),i*90))}
+        if(run.kind==='m'){bull=true;for(let i=0;i<N*N;i++)rem.add(i);gain+=3000;toast('ЗОЛОТОЙ БЫК!');flash(1);navigator.vibrate&&navigator.vibrate([200,80,300]);[300,400,500,700].forEach((f,i)=>setTimeout(()=>tone(f,.3,'square',.12),i*90))}
       }
     }
     [...rem].forEach(k=>{const r=Math.floor(k/N),c=k%N;[[1,0],[-1,0],[0,1],[0,-1]].forEach(([dr,dc])=>{const rr=r+dr,cc=c+dc;if(rr>=0&&rr<N&&cc>=0&&cc<N&&grid[rr][cc]&&grid[rr][cc].kind==='c')rem.add(K(rr,cc))})});
@@ -222,7 +222,7 @@ function endGame(reason){
   const code='BYK-'+(score<1500?'VEG':score<4000?'MEAT':score<8000?'GRILL':'LEGEND')+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
   document.getElementById('reason').textContent=reason;document.getElementById('fscore').textContent=score;renderLB(score);
   document.getElementById('rank').textContent=rank;document.getElementById('promo').textContent=code;
-  document.getElementById('qr').src='../assets/qr.png';
+  document.getElementById('qr').src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent('THEBYK PROMO '+code);
   const msg=`Я набрал ${score} очков в «Мясном Матче» и стал «${rank}»! Сможешь круче?`,url=location.href;
   document.getElementById('tg').href='https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(msg);
   document.getElementById('wa').href='https://wa.me/?text='+encodeURIComponent(msg+' '+url);
@@ -231,9 +231,9 @@ function endGame(reason){
 }
 document.getElementById('go').onclick=startGame;
 document.getElementById('again').onclick=startGame;
-document.getElementById('mute').onclick=function(){muted=!muted;this.textContent=muted?'🔇':'🔊'};
+document.getElementById('mute').onclick=function(){muted=!muted;this.innerHTML=`<i class="fa-solid ${muted?'fa-volume-xmark':'fa-volume-high'}" style="color:#f3ece4"></i>`};
 window.addEventListener('resize',()=>{if(grid){Object.values(els).forEach(e=>e.style.transition='none');render();requestAnimationFrame(()=>Object.values(els).forEach(e=>e.style.transition=''))}});
 initGrid();render();
 </script>
-<script src="../mascot3d.js"></script><script>Mascot3D.mount(document.getElementById("startMascot"),{mode:"front",wave:true,scale:.55});Mascot3D.mount(document.getElementById("endMascot"),{mode:"front",scale:.45});</script></body>
+</body>
 </html>
