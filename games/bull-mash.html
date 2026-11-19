@@ -49,6 +49,7 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../mascot3d.js"></script>
 
 </head>
 <body>
@@ -118,18 +119,8 @@ for(let i=0;i<14;i++){
   gr.position.z=-i*12;scene.add(gr);deco.push(gr);
 }
 // Быки
-function makeBull(color){
-  const b=new THREE.Group();
-  const body=new THREE.Mesh(new THREE.BoxGeometry(1.2,1,1.8),M(color));body.position.y=1.2;b.add(body);
-  const head=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.8,0.8),M(color));head.position.set(0,1.7,-1.1);b.add(head);
-  const snout=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.4,0.2),M(0xe8b8a0));snout.position.set(0,1.5,-1.55);b.add(snout);
-  [-1,1].forEach(s=>{const h=new THREE.Mesh(new THREE.ConeGeometry(0.12,0.6,8),M(0xf4efe9));h.position.set(s*0.55,2.2,-1.1);h.rotation.z=-s*0.8;b.add(h);});
-  b.legs=[];
-  [[-.4,-.6],[.4,-.6],[-.4,.6],[.4,.6]].forEach(([x,z])=>{const l=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.8,0.3),M(0x2a1a14));l.position.set(x,0.4,z);b.add(l);b.legs.push(l);});
-  b.traverse(o=>{if(o.isMesh)o.castShadow=true;});
-  return b;
-}
-const player=makeBull(0x6b3a22);scene.add(player);
+function makeBull(color){const b=TheBykMascot.createMascotModel(THREE,{scale:.58});b.legs=b.userData.legs;b.userData.glass.visible=false;return b;}
+const player=makeBull(0x6b3a22);player.rotation.y=Math.PI;scene.add(player);
 // Шеф
 const chef=new THREE.Group();
 const cb=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.4,3,12),M(0xf4efe9));cb.position.y=1.5;chef.add(cb);

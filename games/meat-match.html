@@ -68,9 +68,11 @@
         .lb td:last-child{text-align:right;font-weight:700}
         .lb tr.me td{color:#ffd75e;background:rgba(255,215,94,.08)}
         .overlay{overflow-y:auto;align-items:safe center}
+    .mascot-start{width:210px;height:190px;margin:-10px auto -4px}.mascot-game{position:fixed;right:8px;bottom:8px;width:150px;height:190px;z-index:4;pointer-events:none;filter:drop-shadow(0 16px 24px rgba(0,0,0,.4))}.mascot-game .mascot-canvas{width:100%;height:100%}@media(max-width:600px){.mascot-game{width:110px;height:140px;right:-2px;bottom:4px}}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../mascot3d.js"></script>
 
 </head>
 <body>
@@ -91,13 +93,13 @@
   </div>
 </div>
 <div id="flash"></div>
-<div class="overlay" id="start"><div class="card">
+<div class="overlay" id="start"><div class="card"><div class="mascot-start" id="matchMascotStart"></div>
   <i class="fa-solid fa-fire-flame-curved" style="font-size:46px;color:#d6261f"></i>
   <h2>Мясной Матч</h2>
   <p>Свайпай соседние тайлы. 3 одинаковых — эволюция в продукт уровнем выше. 3 тайла 3-го уровня — мега-бонус. Окорок ×3 = <b style="color:#ffd75e">Золотой Бык</b>.<br>Каждые 30 сек падает уголёк — убирай его матчем рядом. Больше 10 — конец.</p>
   <button class="btn" id="go"><i class="fa-solid fa-play" style="color:#fff"></i>Начать — 3 минуты</button>
 </div></div>
-<div class="overlay hide" id="end"><div class="card">
+<div class="mascot-game" id="matchMascotGame"></div><div class="overlay hide" id="end"><div class="card">
   <div class="sub" id="reason">Время вышло</div>
   <div class="big" id="fscore">0</div>
   <div class="rank" id="rank"></div>
@@ -112,6 +114,7 @@
   <button class="btn" id="again"><i class="fa-solid fa-rotate-right" style="color:#fff"></i>Ещё раз</button>
 </div></div>
 <script>
+window.addEventListener("load",()=>{TheBykMascot.mountMascot3D(document.getElementById("matchMascotStart"),{wave:true,idle:true,scale:.72,y:-1.15});TheBykMascot.mountMascot3D(document.getElementById("matchMascotGame"),{idle:true,scale:.48,y:-1.3});});
 function renderLB(score){const d=[['Гость 4',10230],['Гость 8',7890],['Гость 2',5600],['Гость 11',3720],['Гость 6',1980],['Гость 1',890]];const r=d.map(x=>({n:x[0],s:x[1]})).concat({n:'Ты',s:score,me:1}).sort((a,b)=>b.s-a.s);const m=['🥇','🥈','🥉'];document.getElementById('lb').innerHTML='<caption>Рейтинг дня</caption>'+r.map((x,i)=>'<tr'+(x.me?' class="me"':'')+'><td>'+(m[i]||i+1)+'</td><td>'+x.n+'</td><td>'+x.s+'</td></tr>').join('');}
 const N=7, board=document.getElementById('board');
 const ICONS={g:['fa-leaf','fa-seedling','fa-tree'],m:['fa-drumstick-bite','fa-burger','fa-bacon'],b:['fa-bread-slice','fa-hotdog','fa-pizza-slice'],x:['fa-bone'],c:['fa-fire']};
