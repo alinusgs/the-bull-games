@@ -46,7 +46,8 @@
         .lb td:last-child{text-align:right;font-weight:700}
         .lb tr.me td{color:#ffd75e;background:rgba(255,215,94,.08)}
         .screen{overflow-y:auto;justify-content:safe center}
-        .mhero{height:min(30vh,240px);width:auto;display:block;margin:0 auto 10px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.6));transform-origin:50% 100%;animation:mIn .8s cubic-bezier(.2,1.4,.4,1) both,mIdle 4s ease-in-out .8s infinite}
+        .mhero{height:min(30vh,240px);width:auto;display:block;margin:0 auto 10px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.6));transform-origin:50% 100%;animation:mIn .8s cubic-bezier(.2,1.4,.4,1) both,hi 3.4s ease-in-out .8s infinite}
+        @keyframes hi{0%,58%,100%{transform:rotate(0) translateY(0)}8%{transform:rotate(-3deg) translateY(-6px)}16%{transform:rotate(2deg) translateY(0)}24%{transform:rotate(-3deg) translateY(-6px)}32%{transform:rotate(2deg) translateY(0)}40%{transform:rotate(-2deg) translateY(-3px)}48%{transform:rotate(1deg) translateY(0)}}
         .msay{display:flex;align-items:flex-end;gap:10px;justify-content:center;margin:6px 0 12px}
         .msay img{width:68px;height:68px;border-radius:50%;background:#2a211d;border:2px solid #f2c14e;object-fit:cover;flex-shrink:0}
         .msay span{background:#f4efe9;color:#111;font-weight:700;font-size:13px;line-height:1.35;padding:10px 13px;border-radius:14px 14px 14px 4px;max-width:220px;text-align:left;margin-bottom:12px}
@@ -65,10 +66,6 @@
         @keyframes spin{to{transform:rotate(360deg)}}
         @keyframes mIn{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:none}}
         @keyframes mIdle{0%,100%{transform:rotate(0)}50%{transform:rotate(-1.4deg)}}
-        .mwave{position:relative;height:min(30vh,240px);aspect-ratio:667/1100;margin:0 auto 10px;transform-origin:50% 100%;animation:mIn .8s cubic-bezier(.2,1.4,.4,1) both,mIdle 4s ease-in-out .8s infinite}
-        .mwave img{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 12px 22px rgba(0,0,0,.6))}
-        .mwave .a{transform-origin:17.72% 57.76%;animation:wv 2.8s ease-in-out .8s infinite}
-        @keyframes wv{0%,56%,100%{transform:rotate(0)}8%,24%,40%{transform:rotate(-9deg)}16%,32%{transform:rotate(-1deg)}48%{transform:rotate(-2deg)}}
         .pill img{width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid #f2c14e;margin:-4px 0}
         .screen h1{font-size:44px}
     </style>
@@ -87,7 +84,7 @@
     <div id="vig"></div>
     <div id="over">ЗАБЕГ <span>&nbsp;ОКОНЧЕН</span></div>
     <div class="screen" id="start">
-        <div class="mwave"><img src="../assets/mascot_wave_body.webp" alt="Маскот The Бык"><img class="a" src="../assets/mascot_wave_arm.webp" alt=""></div>
+        <img class="mhero" src="../assets/mascot.webp" alt="Маскот The Бык">
         <h1>БЫЧИЙ<br><span>ЗАМЕС</span></h1>
         <p>Помоги нашему Быку: собирай мясо, прыгай за окороками на крюках и уворачивайся от ножей Шефа.</p>
         <div class="ctrl">

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Бык — Игровая зона</title>
-<link rel="preload" as="image" href="assets/mascot_wave_body.webp">
+<link rel="preload" as="image" href="assets/mascot.webp">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 <style>
@@ -25,12 +25,10 @@ h1 span{color:var(--acc);display:block}
 .mascot:before{content:"";position:absolute;left:50%;bottom:10%;width:120%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;
   background:radial-gradient(circle,rgba(255,59,47,.28) 0,rgba(255,59,47,.07) 45%,transparent 70%)}
 .mascot:after{content:"";position:absolute;left:50%;bottom:0;width:62%;height:7%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.7),transparent)}
-.fig{position:relative;z-index:1;height:100%;aspect-ratio:667/1100;transform-origin:50% 100%;animation:enter .9s cubic-bezier(.2,1.4,.4,1) both,idle 4s ease-in-out .9s infinite}
+.fig{position:relative;z-index:1;height:100%;aspect-ratio:667/1100;transform-origin:50% 100%;animation:enter .9s cubic-bezier(.2,1.4,.4,1) both,hi 3.4s ease-in-out .9s infinite}
 .fig img{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 12px 22px rgba(0,0,0,.55))}
-.fig .a{transform-origin:17.72% 57.76%;animation:wave 2.8s ease-in-out .9s infinite}
 @keyframes enter{from{opacity:0;transform:translateX(30px) scale(.9)}to{opacity:1;transform:none}}
-@keyframes idle{0%,100%{transform:rotate(0) scaleY(1)}50%{transform:rotate(-1deg) scaleY(1.01)}}
-@keyframes wave{0%,56%,100%{transform:rotate(0)}8%{transform:rotate(-9deg)}16%{transform:rotate(-1deg)}24%{transform:rotate(-9deg)}32%{transform:rotate(-1deg)}40%{transform:rotate(-9deg)}48%{transform:rotate(-2deg)}}
+@keyframes hi{0%,58%,100%{transform:rotate(0) translateY(0)}8%{transform:rotate(-3deg) translateY(-6px)}16%{transform:rotate(2deg) translateY(0)}24%{transform:rotate(-3deg) translateY(-6px)}32%{transform:rotate(2deg) translateY(0)}40%{transform:rotate(-2deg) translateY(-3px)}48%{transform:rotate(1deg) translateY(0)}}
 .bub{position:absolute;z-index:2;background:var(--ink);color:#111;font:700 12px/1.3 Unbounded;padding:9px 12px;border-radius:14px 14px 4px 14px;
   box-shadow:0 8px 20px rgba(0,0,0,.4);animation:pop .5s cubic-bezier(.2,1.6,.4,1) .9s both;white-space:nowrap}
 @keyframes pop{from{opacity:0;transform:scale(.4) translateY(10px)}to{opacity:1;transform:none}}
@@ -74,7 +72,7 @@ footer{margin-top:32px;color:var(--mute);font-size:11px;letter-spacing:.15em;tex
       <h1>Игровая <span>зона</span></h1>
       <p class="sub">Три игры — пока ждёшь заказ. 3 минуты, промокод и звание.</p>
     </div>
-    <div class="mascot m-mob"><div class="fig"><img class="b" src="assets/mascot_wave_body.webp" alt="Маскот The Бык" width="667" height="1100"><img class="a" src="assets/mascot_wave_arm.webp" alt="" width="667" height="1100"></div><div class="bub">Привет!</div></div>
+    <div class="mascot m-mob"><div class="fig"><img class="b" src="assets/mascot.webp" alt="Маскот The Бык" width="667" height="1100"></div><div class="bub">Привет!</div></div>
   </div>
 
   <div class="grid">
@@ -97,7 +95,7 @@ footer{margin-top:32px;color:var(--mute);font-size:11px;letter-spacing:.15em;tex
 
   <footer>The Бык · v1.2</footer>
 </div>
-<div class="mascot m-side"><div class="fig"><img class="b" src="assets/mascot_wave_body.webp" alt="Маскот The Бык" width="667" height="1100"><img class="a" src="assets/mascot_wave_arm.webp" alt="" width="667" height="1100"></div><div class="bub">Привет! Сыграем, пока готовится мясо?</div></div>
+<div class="mascot m-side"><div class="fig"><img class="b" src="assets/mascot.webp" alt="Маскот The Бык" width="667" height="1100"></div><div class="bub">Привет! Сыграем, пока готовится мясо?</div></div>
 </div>
 </body>
 </html>
