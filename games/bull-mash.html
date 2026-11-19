@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <!-- PROTECTED: meta type -->
+    
     <meta name="type" value="app" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Бычий Замес</title>
@@ -45,7 +45,7 @@
         .lb td:first-child{width:34px;color:#8a7f74;text-align:center}
         .lb td:last-child{text-align:right;font-weight:700}
         .lb tr.me td{color:#ffd75e;background:rgba(255,215,94,.08)}
-        .screen{overflow-y:auto;justify-content:safe center}
+        .screen{overflow-y:auto;justify-content:safe center}.mascot-hero{width:min(260px,72vw);max-height:300px;object-fit:contain;border-radius:18px;margin-bottom:10px;filter:drop-shadow(0 14px 25px rgba(0,0,0,.4))}.mascot-end{width:min(220px,58vw);max-height:220px;object-fit:contain;border-radius:16px;margin-bottom:8px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.35))}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -62,6 +62,7 @@
     <div id="vig"></div>
     <div id="over">ЗАБЕГ <span>&nbsp;ОКОНЧЕН</span></div>
     <div class="screen" id="start">
+        <img class="mascot-hero" src="../assets/mascot.png" alt="Маскот The Бык">
         <h1>БЫЧИЙ<br><span>ЗАМЕС</span></h1>
         <p>Собирай мясо, прыгай за окороками на крюках и уворачивайся от ножей Шефа.</p>
         <div class="ctrl">
@@ -73,6 +74,7 @@
         <button id="go">ПОГНАЛИ</button>
     </div>
     <div class="screen hidden" id="end">
+        <img class="mascot-end" src="../assets/mascot.png" alt="Маскот The Бык">
         <h1>ЗАБЕГ <span>ОКОНЧЕН</span></h1>
         <div class="rank" id="rank"></div>
         <div class="big" id="final">0</div>
@@ -101,15 +103,12 @@ sun.shadow.camera.left=-10;sun.shadow.camera.right=10;sun.shadow.camera.top=10;s
 scene.add(sun);
 
 const LANE=2.6, M=(c,o={})=>new THREE.MeshLambertMaterial(Object.assign({color:c},o));
-// Пол-плитка
 const tc=document.createElement('canvas');tc.width=tc.height=128;const g=tc.getContext('2d');
 g.fillStyle='#d9d2c8';g.fillRect(0,0,128,128);g.strokeStyle='#a99f94';g.lineWidth=4;g.strokeRect(0,0,64,64);g.strokeRect(64,64,64,64);g.strokeRect(64,0,64,64);g.strokeRect(0,64,64,64);
 const tex=new THREE.CanvasTexture(tc);tex.wrapS=tex.wrapT=THREE.RepeatWrapping;tex.repeat.set(4,60);
 const floor=new THREE.Mesh(new THREE.PlaneGeometry(10,240),M(0xffffff,{map:tex}));
 floor.rotation.x=-Math.PI/2;floor.position.z=-100;floor.receiveShadow=true;scene.add(floor);
-// Стены
 [-6,6].forEach(x=>{const w=new THREE.Mesh(new THREE.BoxGeometry(0.5,8,240),M(0x8a3b2b));w.position.set(x,4,-100);scene.add(w);});
-// Декор: рельсы с крюками сверху, движутся
 const deco=[];
 for(let i=0;i<14;i++){
   const gr=new THREE.Group();
@@ -117,20 +116,14 @@ for(let i=0;i<14;i++){
   [-5,5].forEach(x=>{const p=new THREE.Mesh(new THREE.BoxGeometry(0.3,7.5,0.3),M(0x444444));p.position.set(x,3.75,0);gr.add(p);});
   gr.position.z=-i*12;scene.add(gr);deco.push(gr);
 }
-// Быки
-function makeBull(color){
-  const b=new THREE.Group();
-  const body=new THREE.Mesh(new THREE.BoxGeometry(1.2,1,1.8),M(color));body.position.y=1.2;b.add(body);
-  const head=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.8,0.8),M(color));head.position.set(0,1.7,-1.1);b.add(head);
-  const snout=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.4,0.2),M(0xe8b8a0));snout.position.set(0,1.5,-1.55);b.add(snout);
-  [-1,1].forEach(s=>{const h=new THREE.Mesh(new THREE.ConeGeometry(0.12,0.6,8),M(0xf4efe9));h.position.set(s*0.55,2.2,-1.1);h.rotation.z=-s*0.8;b.add(h);});
-  b.legs=[];
-  [[-.4,-.6],[.4,-.6],[-.4,.6],[.4,.6]].forEach(([x,z])=>{const l=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.8,0.3),M(0x2a1a14));l.position.set(x,0.4,z);b.add(l);b.legs.push(l);});
-  b.traverse(o=>{if(o.isMesh)o.castShadow=true;});
-  return b;
-}
-const player=makeBull(0x6b3a22);scene.add(player);
-// Шеф
+const mascotTexture=new THREE.TextureLoader().load('../assets/mascot.png');
+mascotTexture.colorSpace=THREE.SRGBColorSpace;
+const playerMat=new THREE.MeshBasicMaterial({map:mascotTexture,transparent:true,side:THREE.DoubleSide});
+const player=new THREE.Mesh(new THREE.PlaneGeometry(3.2,4.8),playerMat);
+player.position.y=2.15;
+player.castShadow=false;
+player.legs=[];
+scene.add(player);
 const chef=new THREE.Group();
 const cb=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.4,3,12),M(0xf4efe9));cb.position.y=1.5;chef.add(cb);
 const ch=new THREE.Mesh(new THREE.SphereGeometry(0.9,16,12),M(0xe8b896));ch.position.y=3.6;chef.add(ch);
@@ -142,8 +135,6 @@ flash.position.y=3;flash.visible=false;chef.add(flash);
 let throwT=0;const THROW=0.35;
 function chefThrow(){throwT=THROW;}
 chef.position.set(0,0,-45);chef.visible=false;scene.add(chef);
-
-// Объекты
 const MAT={
  meat:M(0xb8322a),fat:M(0xf2e6d8),bread:M(0xd8a050),
  bun:M(0x7cff2a,{emissive:0x1f5a00}),patty:M(0x2a5a10),leaf:M(0xc8ff40,{emissive:0x305000}),
@@ -194,13 +185,11 @@ function burst(pos,good){
 }
 const tmpV=new THREE.Vector3();
 function hurtFx(){const v=$('vig');v.classList.remove('on');void v.offsetWidth;v.classList.add('on');}
-
-// Состояние
 let state='start',score,lives,timeLeft,roundTime,round,speed,lane,px,jumpT,slideT,spawnT,boss,shake=0,dist=0,dieT=0;
 const JUMP=0.7,SLIDE=0.6;
 function reset(){
  items.forEach(i=>give(i.kind,i.m));items=[];
- player.rotation.set(0,0,0);player.position.y=0;dieT=0;throwT=0;
+ player.rotation.set(0,0,0);player.position.y=2.15;dieT=0;throwT=0;
  $('over').classList.remove('on');
  score=0;lives=3;timeLeft=180;roundTime=36;round=1;speed=18;lane=1;px=0;jumpT=0;slideT=0;spawnT=1;boss=false;
  chef.visible=false;$('warn').style.display='none';hud();
@@ -292,21 +281,20 @@ function loop(t){
  if(state==='run')update(dt);
  const dying=state==='dying';
  if(dying){dieT+=dt;const k=Math.min(1,dieT/0.9);sp=speed*Math.max(0,1-dieT*1.5);
-  player.rotation.z=-Math.PI/2*(k*k);player.position.y=0.6*k;if(dieT>1.8)showEnd();}
+  player.rotation.z=-Math.PI/2*(k*k);player.position.y=2.15+0.6*k;if(dieT>1.8)showEnd();}
  dist+=sp*dt;
  tex.offset.y=dist/4;
  deco.forEach(d=>{d.position.z+=sp*dt;if(d.position.z>12)d.position.z-=168;});
- // Игрок
  px+=((lane-1)*LANE-px)*Math.min(1,dt*14);
  player.position.x=px;
  if(!dying&&state!=='end'){
   player.rotation.z=((lane-1)*LANE-px)*-0.15;
   const jt=jumpT>0?1-jumpT/JUMP:0;
-  player.position.y=jumpT>0?Math.sin(jt*Math.PI)*2.6:0;
+  player.position.y=2.15+(jumpT>0?Math.sin(jt*Math.PI)*2.6:0);
   const run=t*0.02;
-  player.legs.forEach((l,i)=>l.rotation.x=jumpT>0?0.6:Math.sin(run+(i%2?Math.PI:0)+(i>1?Math.PI:0))*0.7);
+  player.rotation.y=Math.sin(run)*0.035;
  }
- player.scale.y+=(((slideT>0)?0.45:1)-player.scale.y)*Math.min(1,dt*20);
+ const targetScaleY=(slideT>0)?0.62:1;player.scale.y+=(targetScaleY-player.scale.y)*Math.min(1,dt*20);player.scale.x+=(1-player.scale.x)*Math.min(1,dt*20);
  if(chef.visible){chef.position.x=Math.sin(t*0.002)*3;chef.rotation.y=Math.sin(t*0.004)*0.4;}
  if(throwT>0){throwT=Math.max(0,throwT-dt);const k=throwT/THROW;
   chefArm.rotation.x=-Math.sin((1-k)*Math.PI)*2.6;flash.visible=k>0;flash.material.opacity=k*0.7;flash.scale.setScalar(1+(1-k)*2.5);}
