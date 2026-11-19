@@ -8,11 +8,11 @@
     <title>Бычий Замес</title>
     <meta property="og:title" content="Бычий Замес">
     <meta property="og:description" content="3D-раннер: собирай мясо, уворачивайся от ножей Шефа и получи промокод.">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta property="og:type" content="website">
     <style>
         *{box-sizing:border-box;user-select:none;-webkit-tap-highlight-color:transparent}
-        body{margin:0;overflow:hidden;background:#15110f;font-family:'Space Grotesk',sans-serif;color:#f4efe9}
+        body{margin:0;overflow:hidden;background:#15110f;font-family:Inter,sans-serif;color:#f4efe9}
         #canvas{display:block;width:100vw;height:100vh;touch-action:none}
         .hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:20px 24px;pointer-events:none}
         .pill{background:rgba(21,17,15,.75);color:#f4efe9;padding:10px 18px;border-radius:12px;font-weight:700;font-size:20px;display:flex;gap:10px;align-items:center}
@@ -25,7 +25,7 @@
         .screen p{color:#b9aea4;max-width:340px;line-height:1.6;margin:0 0 24px}
         .ctrl{background:#221c19;border:1px solid #3a302b;border-radius:14px;padding:16px 20px;text-align:left;margin-bottom:28px;line-height:2;color:#d9cfc6;font-size:14px}
         .ctrl i{color:#e0482f;width:24px}
-        button{background:#e0482f;color:#fff;border:0;padding:14px 40px;font:700 18px 'Space Grotesk';border-radius:12px;cursor:pointer;transition:transform .2s,background .2s}
+        button{background:#e0482f;color:#fff;border:0;padding:14px 40px;font:700 16px Unbounded;border-radius:12px;cursor:pointer;transition:transform .2s,background .2s}
         button:hover{background:#c73b24;transform:translateY(-2px)}
         .hidden{display:none!important}
         .rank{color:#e8b04a;font-size:24px;font-weight:700}
@@ -46,6 +46,8 @@
         .lb td:last-child{text-align:right;font-weight:700}
         .lb tr.me td{color:#ffd75e;background:rgba(255,215,94,.08)}
         .screen{overflow-y:auto;justify-content:safe center}
+        .screen h1,.big,.rank,.pill,#over,#warn,.code{font-family:Unbounded,sans-serif}
+        .screen h1{font-weight:900;letter-spacing:-.02em}
         .glogo{display:block;width:min(200px,55vw);height:auto;color:#f4efe9;margin:0 auto 22px;flex-shrink:0}
         .msay{display:flex;align-items:flex-end;gap:10px;justify-content:center;margin:6px 0 12px}
         .msay img{width:68px;height:68px;border-radius:50%;background:#2a211d;border:2px solid #f2c14e;object-fit:cover;flex-shrink:0}
@@ -65,7 +67,7 @@
         @keyframes spin{to{transform:rotate(360deg)}}
         @keyframes mIn{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:none}}
         .pill img{width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid #f2c14e;margin:-4px 0}
-        .screen h1{font-size:44px}
+        .screen h1{font-size:clamp(32px,10vw,50px)}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
