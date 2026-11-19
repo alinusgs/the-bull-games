@@ -48,7 +48,7 @@
         .screen{overflow-y:auto;justify-content:safe center}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
     <script src="../mascot3d.js"></script>
 
 </head>
@@ -63,6 +63,7 @@
     <div id="vig"></div>
     <div id="over">ЗАБЕГ <span>&nbsp;ОКОНЧЕН</span></div>
     <div class="screen" id="start">
+        <div id="runnerMascotStart" style="width:230px;height:220px;margin:-10px auto 0;"></div>
         <h1>БЫЧИЙ<br><span>ЗАМЕС</span></h1>
         <p>Собирай мясо, прыгай за окороками на крюках и уворачивайся от ножей Шефа.</p>
         <div class="ctrl">
@@ -119,8 +120,8 @@ for(let i=0;i<14;i++){
   gr.position.z=-i*12;scene.add(gr);deco.push(gr);
 }
 // Быки
-function makeBull(color){const b=TheBykMascot.createMascotModel(THREE,{scale:.58});b.legs=b.userData.legs;b.userData.glass.visible=false;return b;}
-const player=makeBull(0x6b3a22);player.rotation.y=Math.PI;scene.add(player);
+function makeBull(){const b=TheBykMascot.createMascotModel(THREE,{scale:.58,back:true});b.legs=b.userData.legs;b.userData.glass.visible=false;return b;}
+const player=makeBull();scene.add(player);
 // Шеф
 const chef=new THREE.Group();
 const cb=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.4,3,12),M(0xf4efe9));cb.position.y=1.5;chef.add(cb);
@@ -191,7 +192,7 @@ let state='start',score,lives,timeLeft,roundTime,round,speed,lane,px,jumpT,slide
 const JUMP=0.7,SLIDE=0.6;
 function reset(){
  items.forEach(i=>give(i.kind,i.m));items=[];
- player.rotation.set(0,0,0);player.position.y=0;dieT=0;throwT=0;
+ player.rotation.set(0,Math.PI,0);player.position.y=0;dieT=0;throwT=0;
  $('over').classList.remove('on');
  score=0;lives=3;timeLeft=180;roundTime=36;round=1;speed=18;lane=1;px=0;jumpT=0;slideT=0;spawnT=1;boss=false;
  chef.visible=false;$('warn').style.display='none';hud();
@@ -295,7 +296,9 @@ function loop(t){
   const jt=jumpT>0?1-jumpT/JUMP:0;
   player.position.y=jumpT>0?Math.sin(jt*Math.PI)*2.6:0;
   const run=t*0.02;
-  player.legs.forEach((l,i)=>l.rotation.x=jumpT>0?0.6:Math.sin(run+(i%2?Math.PI:0)+(i>1?Math.PI:0))*0.7);
+  player.legs.forEach((l,i)=>l.rotation.x=jumpT>0?0.6:Math.sin(run+(i%2?Math.PI:0))*0.7);
+  player.userData.armL.rotation.x=jumpT>0?0:Math.sin(run+Math.PI)*0.35;
+  player.userData.armR.rotation.x=jumpT>0?0:Math.sin(run)*0.35;
  }
  player.scale.y+=(((slideT>0)?0.45:1)-player.scale.y)*Math.min(1,dt*20);
  if(chef.visible){chef.position.x=Math.sin(t*0.002)*3;chef.rotation.y=Math.sin(t*0.004)*0.4;}
@@ -313,6 +316,7 @@ function loop(t){
 reset();requestAnimationFrame(loop);
 function start(){reset();state='run';$('start').classList.add('hidden');$('end').classList.add('hidden');}
 $('go').onclick=start;$('again').onclick=start;
+TheBykMascot.mountMascot3D(document.getElementById('runnerMascotStart'),{wave:true,idle:true,scale:.62,y:-1.05});
 </script>
 </body>
 </html>
